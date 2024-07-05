@@ -2,13 +2,14 @@
 
 Welcome to Laka Dash! This is a simple recreation of the Chrome Dino game implemented to show Ben that I can learn Typescript quickly ;) 
 
-The player controls a cyclist that must jump to avoid obstacles and score points. The game is built using TypeScript and HTML5 Canvas.
+The player controls the jumping motion of a cyclist to avoid obstacles and gain points. The game is built using TypeScript and HTML5 Canvas.
 
 ## Table of Contents
 
 - [Installation](#installation)
 - [Usage](#usage)
 - [Game Mechanics](#game-mechanics)
+- [Testing](#testing)
 
 ## Installation
 
@@ -43,3 +44,13 @@ This will start a development server and open the game in your default web brows
 - **Obstacles**: Various obstacles appear from the right side of the screen that the cyclist must avoid.
 - **Scoring**: The player's score increments as they stay alive for more time.
 - **Game Over**: The game ends when the cyclist hits an obstacle.
+
+## Testing
+
+- Some (very non exhaustive) unit tests can be run for the position of the cyclist
+- Test suite is written with Jest 
+
+1. **Run the test suite**:
+    ```sh
+    npm test
+    ```
