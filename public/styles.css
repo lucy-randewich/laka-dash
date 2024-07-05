@@ -1,0 +1,30 @@
+/* STYLE SHEET TO MIMIC LAKA'S BRANDING */
+
+
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    background-color: #F7E7E4;
+    font-family: Arial, sans-serif;
+    color: #0A373A;
+}
+
+#gameContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid #ccc;
+    background-color: #FFFFFF;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+canvas {
+    display: block;
+}
+
+button:hover {
+    background-color: #FF4A4A;
+}
