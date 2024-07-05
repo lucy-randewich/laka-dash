@@ -612,6 +612,7 @@ var Game = /** @class */ function() {
         this.canvas = canvas;
         this.ctx = canvas.getContext("2d");
         this.cyclist = new (0, _cyclist.Cyclist)(canvas.width / 4, canvas.height - 60, canvas.height);
+        this.scoreDisplay = document.getElementById("scoreDisplay");
     }
     Game.prototype.start = function() {
         var _this = this;
@@ -655,6 +656,7 @@ var Game = /** @class */ function() {
         });
         // Increment score
         this.score += 1;
+        this.scoreDisplay.innerText = "Score: ".concat(this.score);
     };
     Game.prototype.draw = function() {
         var _this = this;
@@ -665,10 +667,6 @@ var Game = /** @class */ function() {
         this.obstacles.forEach(function(obstacle) {
             return obstacle.draw(_this.ctx);
         });
-        // Draw score
-        this.ctx.fillStyle = "black";
-        this.ctx.font = "20px Arial";
-        this.ctx.fillText("Score: ".concat(this.score), 10, 20);
     };
     Game.prototype.gameOver = function() {
         if (this.animationFrameId !== null) {

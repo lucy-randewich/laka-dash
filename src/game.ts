@@ -15,11 +15,13 @@ export class Game {
     private score: number = 0;
     private obstacleSpawnInterval: number = 1500;
     private lastObstacleSpawnTime: number = 0;
+    private scoreDisplay: HTMLElement;
 
     constructor(canvas: HTMLCanvasElement) {
         this.canvas = canvas;
         this.ctx = canvas.getContext('2d')!;
         this.cyclist = new Cyclist(canvas.width / 4, canvas.height - 60, canvas.height);
+        this.scoreDisplay = document.getElementById('scoreDisplay')!;
     }
 
     start() {
@@ -66,6 +68,7 @@ export class Game {
 
         // Increment score
         this.score += 1;
+        this.scoreDisplay.innerText = `Score: ${this.score}`;
     }
 
     draw() {
@@ -75,11 +78,6 @@ export class Game {
         // Draw cyclist and obstacles
         this.cyclist.draw(this.ctx);
         this.obstacles.forEach(obstacle => obstacle.draw(this.ctx));
-
-        // Draw score
-        this.ctx.fillStyle = 'black';
-        this.ctx.font = '20px Arial';
-        this.ctx.fillText(`Score: ${this.score}`, 10, 20);
     }
 
     gameOver() {
