@@ -4,6 +4,9 @@ Welcome to Laka Dash! This is a simple recreation of the Chrome Dino game implem
 
 The player controls the jumping motion of a cyclist to avoid obstacles and gain points. The game is built using TypeScript and HTML5 Canvas.
 
+![Gameplay example GIF](gameplay.gif)
+
+
 ## Table of Contents
 
 - [Installation](#installation)
