@@ -3,9 +3,15 @@ body {
   background-color: #f7e7e4;
   justify-content: center;
   align-items: center;
-  height: 100vh;
-  margin: 0;
+  margin: 80px;
   font-family: Arial, sans-serif;
+  display: flex;
+}
+
+#container {
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
   display: flex;
 }
 
@@ -22,7 +28,11 @@ canvas {
   display: block;
 }
 
-button:hover {
-  background-color: #ff4a4a;
+.game-title {
+  color: #ff6b6b;
+  text-align: center;
+  margin: 40px;
+  padding: 0;
+  font-size: 4em;
 }
 /*# sourceMappingURL=index.c180ac0f.css.map */

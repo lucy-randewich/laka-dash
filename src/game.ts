@@ -19,7 +19,7 @@ export class Game {
     constructor(canvas: HTMLCanvasElement) {
         this.canvas = canvas;
         this.ctx = canvas.getContext('2d')!;
-        this.cyclist = new Cyclist(canvas.width / 4, canvas.height - 30);
+        this.cyclist = new Cyclist(canvas.width / 4, canvas.height - 60, canvas.height);
     }
 
     start() {

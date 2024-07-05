@@ -5,11 +5,17 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100vh;
-    margin: 0;
+    margin: 80;
     background-color: #F7E7E4;
     font-family: Arial, sans-serif;
     color: #0A373A;
+}
+
+#container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
 
 #gameContainer {
@@ -25,6 +31,10 @@ canvas {
     display: block;
 }
 
-button:hover {
-    background-color: #FF4A4A;
+.game-title {
+    font-size: 4em;
+    color: #FF6B6B;
+    margin: 40;
+    padding: 0;
+    text-align: center;
 }

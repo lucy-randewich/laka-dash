@@ -7,15 +7,21 @@ Collision function handles collisions with obstacle objects.
 export class Cyclist {
     private x: number;
     private y: number;
-    private width: number = 30;
-    private height: number = 30;
+    private width: number = 80;
+    private height: number = 80;
     private gravity: number = 0.6;
     private lift: number = -15;
     private velocity: number = 0;
+    private image: HTMLImageElement;
+    private groundPosition: number;
 
-    constructor(x: number, y: number) {
+    constructor(x: number, y: number, canvasHeight: number) {
         this.x = x;
         this.y = y;
+        this.groundPosition = canvasHeight - this.height;
+
+        this.image = new Image();
+        this.image.src = 'images/cyclist.png';
 
         // Handle jump if space bar pressed
         window.addEventListener('keydown', (e) => {
@@ -29,8 +35,8 @@ export class Cyclist {
         this.velocity += this.gravity;
         this.y += this.velocity;
 
-        if (this.y > 370) { // Assuming ground is y = 370
-            this.y = 370;
+        if (this.y > this.groundPosition) {
+            this.y = this.groundPosition;
             this.velocity = 0;
         }
 
@@ -41,12 +47,17 @@ export class Cyclist {
     }
 
     draw(ctx: CanvasRenderingContext2D) {
-        ctx.fillStyle = 'blue';
-        ctx.fillRect(this.x, this.y, this.width, this.height);
+        if (this.image.complete) {
+            ctx.drawImage(this.image, this.x, this.y, this.width, this.height);
+        } else {
+            this.image.onload = () => {
+                ctx.drawImage(this.image, this.x, this.y, this.width, this.height);
+            };
+        }
     }
 
     jump() {
-        if (this.y === 370) { // Can only jump if cyclist is on the ground
+        if (this.y === this.groundPosition) { // Can only jump if cyclist is on the ground
             this.velocity = this.lift;
         }
     }

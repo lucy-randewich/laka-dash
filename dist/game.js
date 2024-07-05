@@ -13,7 +13,7 @@ var Game = /** @class */ (function () {
         this.lastObstacleSpawnTime = 0;
         this.canvas = canvas;
         this.ctx = canvas.getContext('2d');
-        this.cyclist = new Cyclist(canvas.width / 4, canvas.height - 30);
+        this.cyclist = new Cyclist(canvas.width / 4, canvas.height - 60, canvas.height);
     }
     Game.prototype.start = function () {
         var _this = this;

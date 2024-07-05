@@ -4,15 +4,18 @@ Contains update function with gravity logic and event listener for jumping.
 Collision function handles collisions with obstacle objects.
 */
 var Cyclist = /** @class */ (function () {
-    function Cyclist(x, y) {
+    function Cyclist(x, y, canvasHeight) {
         var _this = this;
-        this.width = 30;
-        this.height = 30;
+        this.width = 80;
+        this.height = 80;
         this.gravity = 0.6;
         this.lift = -15;
         this.velocity = 0;
         this.x = x;
         this.y = y;
+        this.groundPosition = canvasHeight - this.height;
+        this.image = new Image();
+        this.image.src = 'images/cyclist.png';
         // Handle jump if space bar pressed
         window.addEventListener('keydown', function (e) {
             if (e.code === 'Space') {
@@ -23,8 +26,8 @@ var Cyclist = /** @class */ (function () {
     Cyclist.prototype.update = function () {
         this.velocity += this.gravity;
         this.y += this.velocity;
-        if (this.y > 370) { // Assuming ground is y = 370
-            this.y = 370;
+        if (this.y > this.groundPosition) {
+            this.y = this.groundPosition;
             this.velocity = 0;
         }
         if (this.y < 0) {
@@ -33,11 +36,18 @@ var Cyclist = /** @class */ (function () {
         }
     };
     Cyclist.prototype.draw = function (ctx) {
-        ctx.fillStyle = 'blue';
-        ctx.fillRect(this.x, this.y, this.width, this.height);
+        var _this = this;
+        if (this.image.complete) {
+            ctx.drawImage(this.image, this.x, this.y, this.width, this.height);
+        }
+        else {
+            this.image.onload = function () {
+                ctx.drawImage(_this.image, _this.x, _this.y, _this.width, _this.height);
+            };
+        }
     };
     Cyclist.prototype.jump = function () {
-        if (this.y === 370) { // Can only jump if cyclist is on the ground
+        if (this.y === this.groundPosition) { // Can only jump if cyclist is on the ground
             this.velocity = this.lift;
         }
     };
