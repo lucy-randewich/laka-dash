@@ -6,13 +6,27 @@ on specified speed.
 export class Obstacle {
     private x: number;
     private y: number;
-    private width: number = 20;
-    private height: number = 30;
+    private width: number;
+    private height: number;
     private speed: number = 3;
+    private minHeight: number = 20;
+    private maxHeight: number = 50;
+    private minWidth: number = 10;
+    private maxWidth: number = 30;
 
-    constructor(x: number, y: number) {
+    constructor(x: number, canvasHeight: number) {
         this.x = x;
-        this.y = y;
+        this.height = this.getRandomHeight();
+        this.width = this.getRandomWidth();
+        this.y = canvasHeight - this.height;
+    }
+
+    getRandomHeight(): number {
+        return Math.floor(Math.random() * (this.maxHeight - this.minHeight + 1)) + this.minHeight;
+    }
+
+    getRandomWidth(): number {
+        return Math.floor(Math.random() * (this.maxWidth - this.minWidth + 1)) + this.minWidth;
     }
 
     update() {
@@ -20,7 +34,7 @@ export class Obstacle {
     }
 
     draw(ctx: CanvasRenderingContext2D) {
-        ctx.fillStyle = 'red';
+        ctx.fillStyle = '#FF6B6B'; 
         ctx.fillRect(this.x, this.y, this.width, this.height);
     }
 

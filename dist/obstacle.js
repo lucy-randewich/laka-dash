@@ -3,18 +3,28 @@ OBSTACLE CLASS. Handles rendering of obstacle objects and updates locations base
 on specified speed.
 */
 var Obstacle = /** @class */ (function () {
-    function Obstacle(x, y) {
-        this.width = 20;
-        this.height = 30;
+    function Obstacle(x, canvasHeight) {
         this.speed = 3;
+        this.minHeight = 20;
+        this.maxHeight = 50;
+        this.minWidth = 10;
+        this.maxWidth = 30;
         this.x = x;
-        this.y = y;
+        this.height = this.getRandomHeight();
+        this.width = this.getRandomWidth();
+        this.y = canvasHeight - this.height;
     }
+    Obstacle.prototype.getRandomHeight = function () {
+        return Math.floor(Math.random() * (this.maxHeight - this.minHeight + 1)) + this.minHeight;
+    };
+    Obstacle.prototype.getRandomWidth = function () {
+        return Math.floor(Math.random() * (this.maxWidth - this.minWidth + 1)) + this.minWidth;
+    };
     Obstacle.prototype.update = function () {
         this.x -= this.speed;
     };
     Obstacle.prototype.draw = function (ctx) {
-        ctx.fillStyle = 'red';
+        ctx.fillStyle = '#FF6B6B';
         ctx.fillRect(this.x, this.y, this.width, this.height);
     };
     Obstacle.prototype.isOffScreen = function () {

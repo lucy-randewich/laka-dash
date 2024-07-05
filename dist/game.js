@@ -39,7 +39,7 @@ var Game = /** @class */ (function () {
         this.cyclist.update();
         // Spawn obstacles
         if (deltaTime > this.obstacleSpawnInterval) {
-            this.obstacles.push(new Obstacle(this.canvas.width, this.canvas.height - 30));
+            this.obstacles.push(new Obstacle(this.canvas.width, this.canvas.height));
             this.lastObstacleSpawnTime = Date.now();
         }
         // Update obstacles
