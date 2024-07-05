@@ -8,17 +8,18 @@ export class Obstacle {
     private y: number;
     private width: number;
     private height: number;
-    private speed: number = 3;
+    private speed: number;
     private minHeight: number = 20;
     private maxHeight: number = 50;
     private minWidth: number = 10;
     private maxWidth: number = 30;
 
-    constructor(x: number, canvasHeight: number) {
+    constructor(x: number, canvasHeight: number, speed: number) {
         this.x = x;
         this.height = this.getRandomHeight();
         this.width = this.getRandomWidth();
         this.y = canvasHeight - this.height;
+        this.speed = speed;
     }
 
     getRandomHeight(): number {

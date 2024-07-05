@@ -13,7 +13,11 @@ export class Game {
     private obstacles: Obstacle[] = [];
     private animationFrameId: number | null = null;
     private score: number = 0;
+    private baseObstacleSpeed: number = 3;
+    private obstacleSpeedIncrement: number = 0.0005;
     private obstacleSpawnInterval: number = 1500;
+    private minObstacleSpawnInterval: number = 1300;
+    private obstacleSpawnIntervalDecrement: number = 0.5;
     private lastObstacleSpawnTime: number = 0;
     private scoreDisplay: HTMLElement;
 
@@ -47,19 +51,17 @@ export class Game {
     update(deltaTime: number) {
         this.cyclist.update();
 
-        // Spawn obstacles
         if (deltaTime > this.obstacleSpawnInterval) {
-            this.obstacles.push(new Obstacle(this.canvas.width, this.canvas.height));
+            console.log('Spawning new obstacle');
+            const obstacleSpeed = this.baseObstacleSpeed + (this.score * this.obstacleSpeedIncrement);
+            this.obstacles.push(new Obstacle(this.canvas.width, this.canvas.height, obstacleSpeed));
             this.lastObstacleSpawnTime = Date.now();
         }
 
-        // Update obstacles
         this.obstacles.forEach(obstacle => obstacle.update());
 
-        // Get rid of obstacles which aren't on the screne
         this.obstacles = this.obstacles.filter(obstacle => !obstacle.isOffScreen());
 
-        // Check collisions
         this.obstacles.forEach(obstacle => {
             if (this.cyclist.collidesWith(obstacle)) {
                 this.gameOver();
@@ -69,6 +71,8 @@ export class Game {
         // Increment score
         this.score += 1;
         this.scoreDisplay.innerText = `Score: ${this.score}`;
+
+        this.increaseDifficulty();
     }
 
     draw() {
@@ -78,6 +82,12 @@ export class Game {
         // Draw cyclist and obstacles
         this.cyclist.draw(this.ctx);
         this.obstacles.forEach(obstacle => obstacle.draw(this.ctx));
+    }
+
+    // Increase obstacle speed and decrease spawn interval
+    increaseDifficulty() {
+        this.baseObstacleSpeed += this.obstacleSpeedIncrement;
+        this.obstacleSpawnInterval = Math.max(this.minObstacleSpawnInterval, this.obstacleSpawnInterval - this.obstacleSpawnIntervalDecrement);
     }
 
     gameOver() {

@@ -607,7 +607,11 @@ var Game = /** @class */ function() {
         this.obstacles = [];
         this.animationFrameId = null;
         this.score = 0;
+        this.baseObstacleSpeed = 3;
+        this.obstacleSpeedIncrement = 0.0005;
         this.obstacleSpawnInterval = 1500;
+        this.minObstacleSpawnInterval = 1300;
+        this.obstacleSpawnIntervalDecrement = 0.5;
         this.lastObstacleSpawnTime = 0;
         this.canvas = canvas;
         this.ctx = canvas.getContext("2d");
@@ -637,26 +641,25 @@ var Game = /** @class */ function() {
     Game.prototype.update = function(deltaTime) {
         var _this = this;
         this.cyclist.update();
-        // Spawn obstacles
         if (deltaTime > this.obstacleSpawnInterval) {
-            this.obstacles.push(new (0, _obstacle.Obstacle)(this.canvas.width, this.canvas.height));
+            console.log("Spawning new obstacle");
+            var obstacleSpeed = this.baseObstacleSpeed + this.score * this.obstacleSpeedIncrement;
+            this.obstacles.push(new (0, _obstacle.Obstacle)(this.canvas.width, this.canvas.height, obstacleSpeed));
             this.lastObstacleSpawnTime = Date.now();
         }
-        // Update obstacles
         this.obstacles.forEach(function(obstacle) {
             return obstacle.update();
         });
-        // Get rid of obstacles which aren't on the screne
         this.obstacles = this.obstacles.filter(function(obstacle) {
             return !obstacle.isOffScreen();
         });
-        // Check collisions
         this.obstacles.forEach(function(obstacle) {
             if (_this.cyclist.collidesWith(obstacle)) _this.gameOver();
         });
         // Increment score
         this.score += 1;
         this.scoreDisplay.innerText = "Score: ".concat(this.score);
+        this.increaseDifficulty();
     };
     Game.prototype.draw = function() {
         var _this = this;
@@ -667,6 +670,11 @@ var Game = /** @class */ function() {
         this.obstacles.forEach(function(obstacle) {
             return obstacle.draw(_this.ctx);
         });
+    };
+    // Increase obstacle speed and decrease spawn interval
+    Game.prototype.increaseDifficulty = function() {
+        this.baseObstacleSpeed += this.obstacleSpeedIncrement;
+        this.obstacleSpawnInterval = Math.max(this.minObstacleSpawnInterval, this.obstacleSpawnInterval - this.obstacleSpawnIntervalDecrement);
     };
     Game.prototype.gameOver = function() {
         if (this.animationFrameId !== null) {
@@ -773,8 +781,7 @@ on specified speed.
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "Obstacle", ()=>Obstacle);
 var Obstacle = /** @class */ function() {
-    function Obstacle(x, canvasHeight) {
-        this.speed = 3;
+    function Obstacle(x, canvasHeight, speed) {
         this.minHeight = 20;
         this.maxHeight = 50;
         this.minWidth = 10;
@@ -783,6 +790,7 @@ var Obstacle = /** @class */ function() {
         this.height = this.getRandomHeight();
         this.width = this.getRandomWidth();
         this.y = canvasHeight - this.height;
+        this.speed = speed;
     }
     Obstacle.prototype.getRandomHeight = function() {
         return Math.floor(Math.random() * (this.maxHeight - this.minHeight + 1)) + this.minHeight;
