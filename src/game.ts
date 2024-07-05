@@ -14,10 +14,10 @@ export class Game {
     private animationFrameId: number | null = null;
     private score: number = 0;
     private baseObstacleSpeed: number = 3;
-    private obstacleSpeedIncrement: number = 0.0005;
+    private obstacleSpeedIncrement: number = 0.0008;
     private obstacleSpawnInterval: number = 1500;
-    private minObstacleSpawnInterval: number = 1300;
-    private obstacleSpawnIntervalDecrement: number = 0.5;
+    private minObstacleSpawnInterval: number = 1000;
+    private obstacleSpawnIntervalDecrement: number = 0.6;
     private lastObstacleSpawnTime: number = 0;
     private scoreDisplay: HTMLElement;
 
