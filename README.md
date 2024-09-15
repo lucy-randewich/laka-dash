@@ -53,7 +53,7 @@ This will start a development server and open the game in your default web brows
 - Some (very non exhaustive) unit tests can be run for the position of the cyclist
 - Test suite is written with Jest 
 
-1. **Run the test suite**:
+**Run the test suite**:
     ```sh
     npm test
     ```
